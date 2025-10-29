@@ -23,3 +23,32 @@ TITOLI_MASCHILI = ["Sig.", "Dott.", "Avv.",
 
 TITOLI_FEMMINILI = ["Sig.ra", "Dott.ssa", "Avv.sa",
                     "Ing.", "Rag.", "Geom.", "Prof.ssa", "Comm."]
+
+# "Via" e "Piazza" ripetuti apposta per renderli più probabili
+TIPI_STRADE = ["Via", "Corso", "Piazza", "Viale", "Vicolo",
+               "Largo", "Via", "Via", "Piazza", "Via", "Piazza"]
+
+NOMI_STRADE = [
+    # Eroi e Personaggi
+    "Garibaldi", "Mazzini", "Cavour", "Verdi", "Dante Alighieri", "Manzoni", "Leopardi",
+    "Giotto", "Marconi", "Leonardo Da Vinci", "Galilei", "Colombo", "Matteotti", "Gramsci",
+    "Pascoli", "Carducci", "Petrarca", "Boccaccio", "Michelangelo", "Raffaello",
+
+    # Città e Luoghi
+    "Roma", "Milano", "Napoli", "Torino", "Firenze", "Venezia", "Bologna", "Genova",
+    "Palermo", "Bari", "Europa", "Italia",
+
+    # Concetti e Natura
+    "della Repubblica", "dell'Indipendenza", "della Libertà", "della Pace", "XX Settembre",
+    "IV Novembre", "della Vittoria", "Stazione", "Mercato", "Duomo",
+    "dei Fiori", "degli Ulivi", "dei Pini", "delle Rose", "dei Mille", "Nuova",
+]
+
+# Dentro a generatore_dati/dati.py
+
+PREFISSI_TELEFONICI = [
+    "333", "347", "338", "335", "366", "339", "348", "349", "340", "334",
+    "320", "328", "329", "330", "331", "336", "337", "342", "345", "346",
+    "350", "351", "360", "368", "370", "371", "373", "377", "379",
+    "380", "388", "389", "390", "391", "392", "393"
+]
