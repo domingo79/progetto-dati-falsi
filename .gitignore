@@ -1,0 +1,15 @@
+# 1. Ambiente virtuale
+venv/
+
+# 2. Cache di Python
+__pycache__/
+*.pyc
+
+# 3. File di build (quando creerai il pacchetto per la distribuzione)
+build/
+dist/
+*.egg-info/
+
+# 4. (Opzionale) Configurazione dell'editor
+.vscode/
+.idea/
