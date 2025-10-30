@@ -41,8 +41,13 @@ print(cellulari)
 print()
 
 ################################## generazione_comune ##################################
-# genera 10 comuni casuali
+# genera 10 comuni casuali con provincia e cap
 print("\n--- Esempio di 10 luoghi casuali ---")
 for _ in range(10):
     comune, prov, cap = generazione_comune()
-    print(f"Comune: {comune}, Provincia: {prov}, CAP: {cap}")
+    print(f"{comune}, Provincia: {prov}, CAP: {cap}")
+
+# genera 5 comuni [0]comuni [1]cap [2]provincia
+lista_comuni = [generazione_comune()[0] for _ in range(5)]
+for comune in lista_comuni:
+    print("Comune:", comune)
