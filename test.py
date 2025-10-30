@@ -21,7 +21,7 @@ print()
 cellulari = [genera_telefono(3) for _ in range(3)]
 print(" Genara 3 numeri di cellulari ".center(70, '#'))
 for cellulare in cellulari:
-    print(f"{cellulare['cellulare']}")
+    print(f"{cellulare['cellulare']} oppure possiamo avere doppio formato prefisso: {cellulare['prefisso']} numero: {cellulare['numero']}")
 print()
 
 ################################## generazione_comune ##################################
