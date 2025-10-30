@@ -1,3 +1,4 @@
+
 import random
 from . import dati
 
@@ -94,3 +95,16 @@ def genera_telefono(numero: int = 1, seed: int | None = None):
         cellulare_completo = f"{prefisso} {numero_cellulare}"
         lista_cellulari.append(cellulare_completo)
     return lista_cellulari
+
+
+def generazione_comune():
+
+    if not dati.LISTA_COMUNI:
+        return "N/D", "N/D", "N/D",
+    comune_scelto = random.choice(dati.LISTA_COMUNI)
+
+    comune = comune_scelto["nome"]
+    provincia = comune_scelto["sigla"]
+    cap = comune_scelto["cap"][0]
+
+    return comune, cap, provincia

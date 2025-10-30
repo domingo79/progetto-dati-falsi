@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "generatore"
-version = "0.0.3"
+version = "0.0.4"
 description = "Un pacchetto per generare nomi casuali per il corso Python."
 authors = [{ name = "Domenico Santo", email = "domenicosanto.dev@gmail.com" },]
 

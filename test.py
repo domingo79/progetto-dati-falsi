@@ -1,4 +1,4 @@
-from generatore import genera_nomi, genera_strade, genera_telefono
+from generatore import genera_nomi, genera_strade, genera_telefono, generazione_comune
 
 #################################  genera_nomi     ###################################
 # genera 5 Nomi e Cognomi con Titoli Formato → ['Ing. Arianna Rinaldi']
@@ -39,3 +39,10 @@ cellulari = genera_telefono(3)
 print(" Genara 3 numeri di cellulari ".center(70, '#'))
 print(cellulari)
 print()
+
+################################## generazione_comune ##################################
+# genera 10 comuni casuali
+print("\n--- Esempio di 10 luoghi casuali ---")
+for _ in range(10):
+    comune, prov, cap = generazione_comune()
+    print(f"Comune: {comune}, Provincia: {prov}, CAP: {cap}")

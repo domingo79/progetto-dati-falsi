@@ -1,3 +1,29 @@
+from pathlib import Path
+import json
+
+# Path(__file__) è il file corrente .parent è la cartella che lo contiene
+CARTELLA_PROGETTO = Path(__file__).parent
+JSON_COMUNI = CARTELLA_PROGETTO / "comuni_italiani.json"
+
+
+def carica_dati_json(file_path):
+    """Funzione helper per caricare un file JSON"""
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            dati = json.load(f)
+            return dati
+    except FileNotFoundError:
+        print(f"ERRORE: File non trovato a questo percorso: {file_path}")
+        return []
+    except json.JSONDecodeError:
+        print(
+            f"ERRORE: Il file JSON non è formattato correttamente: {file_path}")
+        return []
+
+
+# --- CARICAMENTO DATI UNA SOLA VOLTA ---
+LISTA_COMUNI = carica_dati_json(JSON_COMUNI)
+
 NOMI_MASCHILI = [
     "Alessandro", "Andrea", "Matteo", "Luca", "Lorenzo", "Gabriele", "Leonardo", "Francesco", "Emanuele", "Davide",
     "Giuseppe", "Antonio", "Simone", "Riccardo", "Federico", "Giovanni", "Marco", "Stefano", "Nicola", "Angelo",
