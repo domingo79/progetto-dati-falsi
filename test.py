@@ -1,53 +1,32 @@
 from generatore import genera_nomi, genera_strade, genera_telefono, generazione_comune
 
-#################################  genera_nomi     ###################################
-# genera 5 Nomi e Cognomi con Titoli Formato → ['Ing. Arianna Rinaldi']
-nomi_completi = genera_nomi(5)
-print("")
-print(" Nomi e Cognomi con Titoli ".center(70, '#'))
-print(nomi_completi)
-print("")
-
-# genera 5 studenti con solo nome e cognome Formato → ['Pietro Bruno']
-studenti = genera_nomi(5, titoli=False)
-print(" Studenti con solo Nome e Cognome ".center(70, '#'))
-print(studenti)
-print()
-
-# genera 5 persone statiche con l'uso del seed
-nomi_completi_statici = genera_nomi(5, seed=(79))
-print(" Nomi e Cognomi con Titoli (dati STATICI) ".center(70, '#'))
-print(nomi_completi_statici)
-print()
-
-
 #################################   genera_strade   #################################
-# genera 2 indirizzi casuali in formato → [Largo dei Mille, 190']
-indirizzo = genera_strade(2)
-print(" Genara due indirizzi completi (casuali) ".center(70, '#'))
-print(indirizzo)
+# genera indirizzo casuale in formato → {'odonimo': 'Via', 'nome': 'Garibaldi', 'civico': 100}
+indirizzo = genera_strade()
+print(" Genara un indirizzo completo (casuale) ".center(70, '#'))
+print(
+    f"Indirizzo: {indirizzo["odonimo"]} {indirizzo["nome"]}, {indirizzo['civico']}")
 print()
 
-indirizzo_statico = genera_strade(2, seed=False)
-print(" Genara due indirizzi completi (STATICI) ".center(70, '#'))
-print(indirizzo_statico)
+# genera n indirizzi casuali in formato → {'odonimo': 'Via', 'nome': 'Garibaldi', 'civico': 100}
+print(" Genara 5 indirizzi completi (casuali) ".center(70, '#'))
+indirizzi = [genera_strade() for _ in range(5)]
+for indirizzo in indirizzi:
+    print(
+        f"Indirizzo: {indirizzo["odonimo"]} {indirizzo["nome"]}, {indirizzo['civico']}")
 print()
 
 ################################   genera_telefono     ################################
-# genera 3 numeri di telefono casuali nel formato → ['371 4759382']
-cellulari = genera_telefono(3)
+# genera 3 numeri di cellulari casuali nel formato → {'prefisso': '336', 'numero': '9825979', 'cellulare': '336 9825979'}
+cellulari = [genera_telefono(3) for _ in range(3)]
 print(" Genara 3 numeri di cellulari ".center(70, '#'))
-print(cellulari)
+for cellulare in cellulari:
+    print(f"{cellulare['cellulare']}")
 print()
 
 ################################## generazione_comune ##################################
-# genera 10 comuni casuali con provincia e cap
-print("\n--- Esempio di 10 luoghi casuali ---")
-for _ in range(10):
-    comune, prov, cap = generazione_comune()
-    print(f"{comune}, Provincia: {prov}, CAP: {cap}")
-
-# genera 5 comuni [0]comuni [1]cap [2]provincia
-lista_comuni = [generazione_comune()[0] for _ in range(5)]
+# genera 10 comuni casuali con provincia e cap formato → {'comune': 'Neviglie', 'cap': 'CN', 'provincia': 'CN'}
+lista_comuni = [generazione_comune() for _ in range(10)]
+print(" Genera 10 comuni casuali ".center(70, '#'))
 for comune in lista_comuni:
-    print("Comune:", comune)
+    print(f"{comune['comune']} {comune['cap']} {comune['provincia']}")

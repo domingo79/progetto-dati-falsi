@@ -45,66 +45,108 @@ def genera_nomi(numero: int = 10, titoli: bool = True, seed: int | None = None):
     return nomi_completi
 
 
-def genera_strade(numero: int = 1, seed: int | None = None):
+def genera_strade(seed: int | None = None):
     """
-    Genera una lista di indirizzi stradali casuali (Via, Nome, Civico).
+    Genera un indirizzo stradale fittizio con odonimo, nome e n.civico.
+
+    Esempio di output:
+    {'odonimo': 'Via', 'nome': 'Garibaldi', 'civico': 100}
 
     Args:
-        numero (int, opzionale): Numero di indirizzi da generare (default 1).
-        seed (int | None, opzionale): Seed per il generatore casuale.
+        seed (int | None, optional): Un seme (seed) opzionale per il
+            generatore casuale, per ottenere risultati riproducibili.
+            Default a None (casuale).
 
     Returns:
-        list[str]: Lista di indirizzi casuali.
+        dict: Un dizionario contenente:
+              - "odonimo" (str): Il tipo di strada (es. "Via", "Piazza").
+              - "nome" (str): Il nome della strada (es. "Garibaldi").
+              - "civico" (int): Un numero civico casuale.
     """
     if seed is not None:
         random.seed(seed)
 
-    lista_indirizzi = []
-    for _ in range(numero):
-        tipo = random.choice(dati.TIPI_STRADE)
-        nome = random.choice(dati.NOMI_STRADE)
-        civico = random.randint(1, 200)
-
-        indirizzo_completo = f"{tipo} {nome}, {civico}"
-        lista_indirizzi.append(indirizzo_completo)
-
-    return lista_indirizzi
+    odonimo = random.choice(dati.TIPI_STRADE)
+    nome = random.choice(dati.NOMI_STRADE)
+    civico = random.randint(1, 200)
+    return {
+        "odonimo": odonimo,
+        "nome": nome,
+        "civico": civico
+    }
 
 
-def genera_telefono(numero: int = 1, seed: int | None = None):
+def generazione_comune(seed: int | None = None):
     """
-    Genera una lista di numeri di cellulari casuali (330 3032478).
+    Genera un Comune fittizio con nome, CAP e provincia.
+
+    Esempio di output:
+    {'comune': 'Andria', 'cap': '76123', 'provincia': 'BT'}
 
     Args:
-        numero (int, opzionale): Numero di cellulari da generare (default 1).
-        seed (int | None, opzionale): Seed per il generatore casuale.
+        seed (int | None, optional): Un seme (seed) opzionale per il
+            generatore casuale, per ottenere risultati riproducibili.
+            Default a None (casuale).
 
     Returns:
-        list[str]: Lista di numeri di cellulari casuali.
+        dict: Un dizionario contenente:
+              - "comune" (str): Il nome del comune (es. "Andria").
+              - "cap" (str): Il Codice di Avviamento Postale (es. "76123").
+              - "provincia" (str): La sigla della provincia (es. "BT").
     """
     if seed is not None:
         random.seed(seed)
-
-    lista_cellulari = []
-    for _ in range(numero):
-        prefisso = random.choice(dati.PREFISSI_TELEFONICI)
-        cifre_numero = [str(random.randint(0, 9)) for _ in range(7)]
-        # unisco le cifre
-        numero_cellulare = "".join(cifre_numero)
-
-        cellulare_completo = f"{prefisso} {numero_cellulare}"
-        lista_cellulari.append(cellulare_completo)
-    return lista_cellulari
-
-
-def generazione_comune():
 
     if not dati.LISTA_COMUNI:
-        return "N/D", "N/D", "N/D",
+        # --- CORREZIONE LOGICA QUI ---
+        # Deve restituire un dict, non una tupla, per coerenza
+        return {
+            "comune": "N/D",
+            "cap": "N/D",
+            "provincia": "N/D"
+        }
+
     comune_scelto = random.choice(dati.LISTA_COMUNI)
 
     comune = comune_scelto["nome"]
     provincia = comune_scelto["sigla"]
     cap = comune_scelto["cap"][0]
 
-    return comune, cap, provincia
+    return {
+        "comune": comune,
+        "cap": cap,
+        "provincia": provincia
+    }
+
+
+def genera_telefono(seed: int | None = None):
+    """
+    Genera un numero di cellulare fittizio (es. 330 3032478).
+
+    Esempio di output:
+    {'prefisso': '330', 'numero': '3032478', 'completo': '330 3032478'}
+
+    Args:
+        seed (int | None, opzionale): Seed per il generatore casuale
+            per risultati riproducibili. Default a None.
+
+    Returns:
+        dict: Un dizionario contenente:
+              - "prefisso" (str): Il prefisso del cellulare (es. "330").
+              - "numero" (str): Il corpo del numero (7 cifre).
+              - "completo" (str): Il numero formattato "prefisso numero".
+    """
+    if seed is not None:
+        random.seed(seed)
+
+    prefisso = random.choice(dati.PREFISSI_TELEFONICI)
+
+    cifre_numero = [str(random.randint(0, 9)) for _ in range(7)]
+
+    numero_cellulare = "".join(cifre_numero)
+
+    return {
+        "prefisso": prefisso,
+        "numero": numero_cellulare,
+        "cellulare": f"{prefisso} {numero_cellulare}"
+    }
