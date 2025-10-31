@@ -4,10 +4,10 @@ Pacchetto Python per generare dati fittizi (nomi, indirizzi, numeri di telefono,
 
 ## Contenuto del pacchetto
 Il pacchetto espone (import da `generatore`):
-- `genera_anafragica(titoli: bool = False, seed: int | None = None)` — genera un dizionario con `nome`, `cognome`, `sesso` e opzionalmente `titolo`. Accetta `seed` per riproducibilità.
+- `genera_anagrafica(titoli: bool = False, seed: int | None = None)` — genera un dizionario con `nome`, `cognome`, `sesso` e opzionalmente `titolo`. Accetta `seed` per riproducibilità.
 - `genera_strade()` — genera un indirizzo casuale (es.: odonimo, nome, civico).
 - `genera_telefono(seed: int | None = None)` — genera un numero telefonico casuale; accetta `seed`.
-- `generazione_comune()` — (funzione presente nel package; restituisce dati relativi a un comune italiano).
+- `genera_comune()` — (funzione presente nel package; restituisce dati relativi a un comune italiano).
 - ... `molte altre in arrivo.....`
 
 ---
