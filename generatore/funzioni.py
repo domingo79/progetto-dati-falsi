@@ -2,7 +2,23 @@ import random
 from . import dati
 
 
-def genera_anafragica(titoli: bool = False, seed: int | None = None):
+def genera_persona(seed: int | None = None):
+    anagrafica = genera_anagrafica()
+    cellulare = genera_telefono()
+    indirizzo = genera_strade()
+    comune = genera_comune()
+
+    return {
+        "nome": anagrafica['nome'],
+        "cognome": anagrafica['cognome'],
+        "sesso": anagrafica['sesso'],
+        "cellulare": cellulare['cellulare'],
+        "indirizzo": [indirizzo['odonimo'], indirizzo['nome'], str(indirizzo['civico'])],
+        "comune": [comune["comune"], comune["cap"], comune["provincia"]]
+    }
+
+
+def genera_anagrafica(titoli: bool = False, seed: int | None = None):
     """
     Genera nome, cognome e sesso di una persona.
     Se richiesto, aggiunge un titolo.
@@ -85,7 +101,7 @@ def genera_strade(seed: int | None = None):
     }
 
 
-def generazione_comune(seed: int | None = None):
+def genera_comune(seed: int | None = None):
     """
     Genera un Comune fittizio con nome, CAP e provincia.
 

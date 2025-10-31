@@ -1,4 +1,4 @@
-from generatore import genera_anafragica, genera_strade, genera_telefono, generazione_comune
+from generatore import genera_anagrafica, genera_strade, genera_telefono, genera_comune, genera_persona
 
 #################################   genera_strade   #################################
 # genera indirizzo casuale in formato → {'odonimo': 'Via', 'nome': 'Garibaldi', 'civico': 100}
@@ -26,7 +26,7 @@ print()
 
 ################################## generazione_comune ##################################
 # genera 10 comuni casuali con provincia e cap formato → {'comune': 'Neviglie', 'cap': 'CN', 'provincia': 'CN'}
-lista_comuni = [generazione_comune() for _ in range(10)]
+lista_comuni = [genera_comune() for _ in range(10)]
 print(" Genera 10 comuni casuali ".center(70, '#'))
 for comune in lista_comuni:
     print(f"{comune['comune']} {comune['cap']} {comune['provincia']}")
@@ -35,7 +35,7 @@ print()
 ################################### genera_anafragica ###################################
 # genera un anagrafica di base con la possibilità di avere anche un 'titolo' titoli=True
 # formato → {'nome': 'Alessia', 'cognome': 'Martini', 'sesso': 'F'}
-anfragica = genera_anafragica()
+anfragica = genera_anagrafica()
 print(" genera un'anagrafica di base ".center(70, '#'))
 print(
     f"Nome: {anfragica['nome']} Cognome: {anfragica['cognome']} Sesso: {anfragica['sesso']}")
@@ -43,8 +43,17 @@ print()
 
 # genera 4 anagrafiche casuali con formato titolo, nome e cognome
 # formato → {'nome': 'Guido', 'cognome': 'Mancini', 'sesso': 'M', 'titolo': 'Sig.'}
-lista_anagrafica = [genera_anafragica(titoli=True) for _ in range(4)]
+lista_anagrafica = [genera_anagrafica(titoli=True) for _ in range(4)]
 print(" Genera 4 anagrafiche con formato titolo nome cognome".center(70, '#'))
 for p in lista_anagrafica:
     print(f"{p['titolo']} {p['nome']} {p['cognome']}")
 print()
+
+
+persone = [genera_persona() for _ in range(4)]
+for persona in persone:
+    indirizzo_formattato = " ".join((persona["indirizzo"]))
+    comune_formattato = " ".join(persona["comune"])
+    print(
+        f"{persona["nome"]} {persona["cognome"]} {persona["cellulare"]} "
+        f"indirizzo: {indirizzo_formattato} - {comune_formattato}")
