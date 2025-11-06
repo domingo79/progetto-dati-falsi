@@ -4,86 +4,6 @@ from codicefiscale import codice_fiscale as cf
 from . import dati
 
 
-def genera_persona(seed: int | None = None):
-    """
-    Genera un dizionario completo contenente dati anagrafici, di contatto e residenza per una 
-    persona fittizia.
-
-    Args:
-        seed (int | None, optional): Un valore seed opzionale per l'inizializzazione 
-                                    del generatore di numeri casuali. Questo assicura
-                                    che, se fornito, chiamate consecutive alla funzione 
-                                    con lo stesso seed producano lo stesso output. 
-                                    Il valore predefinito è None.
-
-    Returns:
-        dict: Un dizionario contenente le seguenti chiavi e i relativi dati generati:
-            - "nome" (str): Il nome di battesimo.
-            - "cognome" (str): Il cognome.
-            - "sesso" (str): Il sesso ('M' o 'F').
-            - "cellulare" (str): Un numero di telefono cellulare.
-            - "data_nascita" (str): data_nascita (DD/MM/YYY),
-            - "eta": (int)eta,
-            - "codice_fiscale"(str): codice_fiscale,
-            - "indirizzo" (list[str]): Una lista con [Odonomio, Nome strada, Numero civico].
-            - "comune" (list[str]): Una lista con [Nome Comune, CAP, Provincia].
-
-    Esempi:
-        >>> persona = genera_persona()
-        >>> print(persona['nome'])
-        'Marco'
-        >>> print(persona['indirizzo'][1])
-        'Via Roma'
-
-        >>> # Generazione ripetibile
-        >>> persona_A = genera_persona(seed=42)
-        >>> persona_B = genera_persona(seed=42)
-        >>> persona_A == persona_B
-        True
-    """
-    # popolamento da genera_anagrafica()
-    anagrafica = genera_anagrafica()
-    nome = anagrafica['nome']
-    cognome = anagrafica['cognome']
-    sesso = anagrafica['sesso']
-
-    # popolamento da genera_telefono()
-    cellulare = genera_telefono()
-    cellulare = cellulare['cellulare']
-
-    # popolamento da genera_strade()
-    indirizzo = genera_strade()
-    indirizzo = [indirizzo['odonimo'], indirizzo['nome'], indirizzo["civico"]]
-
-    # popolamento da genera_comune()
-    comune = genera_comune()
-    comune = [comune["comune"], comune["cap"], comune["provincia"]]
-
-    # popolamento da genera_eta_e_data_nascita()
-    data_di_nascita = genera_eta_e_data_nascita()
-    eta = data_di_nascita["eta"]
-    data_nascita = data_di_nascita["data_nascita"]
-
-    codice_fiscale = cf.genera_codice_fiscale(
-        nome=nome,
-        cognome=cognome,
-        sesso=sesso,
-        data_nascita=data_nascita,
-        comune=comune[0].strip()
-    )
-    return {
-        "nome": nome,
-        "cognome": cognome,
-        "sesso": sesso,
-        "cellulare": cellulare,
-        "indirizzo": indirizzo,
-        "comune": comune,
-        "data_nascita": data_nascita,
-        "eta": eta,
-        "codice_fiscale": codice_fiscale,
-    }
-
-
 def genera_anagrafica(titoli: bool = False, seed: int | None = None):
     """
     Genera nome, cognome e sesso di una persona.
@@ -294,4 +214,84 @@ def genera_eta_e_data_nascita(min_age=18, max_age=90, seed: int | None = None):
         # Formattato come stringa DD/MM/YYYY
         "data_nascita": data_nascita.strftime("%d/%m/%Y"),
         "eta": eta
+    }
+
+
+def genera_persona(seed: int | None = None):
+    """
+    Genera un dizionario completo contenente dati anagrafici, di contatto e residenza per una 
+    persona fittizia.
+
+    Args:
+        seed (int | None, optional): Un valore seed opzionale per l'inizializzazione 
+                                    del generatore di numeri casuali. Questo assicura
+                                    che, se fornito, chiamate consecutive alla funzione 
+                                    con lo stesso seed producano lo stesso output. 
+                                    Il valore predefinito è None.
+
+    Returns:
+        dict: Un dizionario contenente le seguenti chiavi e i relativi dati generati:
+            - "nome" (str): Il nome di battesimo.
+            - "cognome" (str): Il cognome.
+            - "sesso" (str): Il sesso ('M' o 'F').
+            - "cellulare" (str): Un numero di telefono cellulare.
+            - "data_nascita" (str): data_nascita (DD/MM/YYY),
+            - "eta": (int)eta,
+            - "codice_fiscale"(str): codice_fiscale,
+            - "indirizzo" (list[str]): Una lista con [Odonomio, Nome strada, Numero civico].
+            - "comune" (list[str]): Una lista con [Nome Comune, CAP, Provincia].
+
+    Esempi:
+        >>> persona = genera_persona()
+        >>> print(persona['nome'])
+        'Marco'
+        >>> print(persona['indirizzo'][1])
+        'Via Roma'
+
+        >>> # Generazione ripetibile
+        >>> persona_A = genera_persona(seed=42)
+        >>> persona_B = genera_persona(seed=42)
+        >>> persona_A == persona_B
+        True
+    """
+    # popolamento da genera_anagrafica()
+    anagrafica = genera_anagrafica()
+    nome = anagrafica['nome']
+    cognome = anagrafica['cognome']
+    sesso = anagrafica['sesso']
+
+    # popolamento da genera_telefono()
+    cellulare = genera_telefono()
+    cellulare = cellulare['cellulare']
+
+    # popolamento da genera_strade()
+    indirizzo = genera_strade()
+    indirizzo = [indirizzo['odonimo'], indirizzo['nome'], indirizzo["civico"]]
+
+    # popolamento da genera_comune()
+    comune = genera_comune()
+    comune = [comune["comune"], comune["cap"], comune["provincia"]]
+
+    # popolamento da genera_eta_e_data_nascita()
+    data_di_nascita = genera_eta_e_data_nascita()
+    eta = data_di_nascita["eta"]
+    data_nascita = data_di_nascita["data_nascita"]
+
+    codice_fiscale = cf.genera_codice_fiscale(
+        nome=nome,
+        cognome=cognome,
+        sesso=sesso,
+        data_nascita=data_nascita,
+        comune=comune[0].strip().upper()
+    )
+    return {
+        "nome": nome,
+        "cognome": cognome,
+        "sesso": sesso,
+        "cellulare": cellulare,
+        "indirizzo": indirizzo,
+        "comune": comune,
+        "data_nascita": data_nascita,
+        "eta": eta,
+        "codice_fiscale": codice_fiscale,
     }
