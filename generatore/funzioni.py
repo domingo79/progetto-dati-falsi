@@ -3,6 +3,39 @@ from . import dati
 
 
 def genera_persona(seed: int | None = None):
+    """
+    Genera un dizionario completo contenente dati anagrafici, di contatto e residenza per una 
+    persona fittizia.
+
+    Args:
+        seed (int | None, optional): Un valore seed opzionale per l'inizializzazione 
+                                    del generatore di numeri casuali. Questo assicura
+                                    che, se fornito, chiamate consecutive alla funzione 
+                                    con lo stesso seed producano lo stesso output. 
+                                    Il valore predefinito è None.
+
+    Returns:
+        dict: Un dizionario contenente le seguenti chiavi e i relativi dati generati:
+            - "nome" (str): Il nome di battesimo.
+            - "cognome" (str): Il cognome.
+            - "sesso" (str): Il sesso ('M' o 'F').
+            - "cellulare" (str): Un numero di telefono cellulare.
+            - "indirizzo" (list[str]): Una lista con [Odonomio, Nome strada, Numero civico].
+            - "comune" (list[str]): Una lista con [Nome Comune, CAP, Provincia].
+
+    Esempi:
+        >>> persona = genera_persona()
+        >>> print(persona['nome'])
+        'Marco'
+        >>> print(persona['indirizzo'][1])
+        'Via Roma'
+
+        >>> # Generazione ripetibile
+        >>> persona_A = genera_persona(seed=42)
+        >>> persona_B = genera_persona(seed=42)
+        >>> persona_A == persona_B
+        True
+    """
     anagrafica = genera_anagrafica()
     cellulare = genera_telefono()
     indirizzo = genera_strade()
