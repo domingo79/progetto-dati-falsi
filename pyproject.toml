@@ -4,9 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "generatore"
-version = "0.0.8"
-description = "Un pacchetto per generare nomi casuali per il corso Python."
+version = "0.1.0"
+description = "Un pacchetto per generare dati casuali di persone, indirizzi, numeri di telefono 
+e anagrafiche, utili per popolamento di database, testing o esercizi in Python."
 authors = [{ name = "Domenico Santo", email = "domenicosanto.dev@gmail.com" },]
+dependencies = ["codicefiscale-ita",]
 
 [tool.setuptools]
 packages = ["generatore"]
