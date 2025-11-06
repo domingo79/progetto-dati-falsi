@@ -1,24 +1,48 @@
-# generatore — Progetto 'progetto-dati-falsi'
+# generatore — 'progetto-dati-falsi' 🇮🇹
 
-Pacchetto Python per generare dati fittizi (nomi, indirizzi, numeri di telefono, ecc.) pensato per uso didattico.
+Un pacchetto leggero e semplice per generare **dati anagrafici italiani fittizi completi** (inclusi Codice Fiscale, data di nascita e dati di residenza). Utile per popolamento di database, testing o per uso didattico.
+
+---
 
 ## Contenuto del pacchetto
-Il pacchetto espone (import da `generatore`):
-- `genera_anagrafica(titoli: bool = False, seed: int | None = None)` — genera un dizionario con `nome`, `cognome`, `sesso` e opzionalmente `titolo`. Accetta `seed` per riproducibilità.
-- `genera_strade()` — genera un indirizzo casuale (es.: odonimo, nome, civico).
-- `genera_telefono(seed: int | None = None)` — genera un numero telefonico casuale; accetta `seed`.
-- `genera_comune()` — (funzione presente nel package; restituisce dati relativi a un comune italiano).
-- ... `molte altre in arrivo.....`
+
+Il pacchetto espone (import diretto da `generatore`) le seguenti funzioni principali:
+
+### 👤 `genera_persona(seed: int | None = None)`
+Genera un dizionario completo contenente tutti i dati aggregati di una persona fittizia. Accetta un `seed` per la riproducibilità.
+
+**Output (dict) e Chiavi Generati:**
+* `"nome"` (str): Il nome di battesimo.
+* `"cognome"` (str): Il cognome.
+* `"sesso"` (str): Il sesso ('M' o 'F').
+* `"cellulare"` (str): Un numero di telefono cellulare.
+* **`"codice_fiscale"` (str): Il Codice Fiscale calcolato sulla base degli altri dati. (NUOVO!)**
+* **`"data_nascita"` (str): Data di nascita, formattata come "DD/MM/YYYY". (NUOVO!)**
+* **`"eta"` (int): Età calcolata in anni. (NUOVO!)**
+* `"indirizzo"` (list[str]): Una lista con [Odonomio, Nome strada, Numero civico].
+* `"comune"` (list[str]): Una lista con [Nome Comune, CAP, Provincia].
+
+---
+
+### Altre Funzioni Utili
+
+* `genera_anagrafica(titoli: bool = False, seed: int | None = None)`: Genera un dizionario con `nome`, `cognome`, `sesso` e opzionalmente `titolo`.
+* **`genera_eta_e_data_nascita(min_age=18, max_age=90, seed: int | None = None)`:** Genera un dizionario con `"data_nascita"` e `"eta"`, vincolati da un range di età.
+* `genera_strade(seed: int | None = None)`: Genera un indirizzo casuale (es.: odonimo, nome, civico).
+* `genera_telefono(seed: int | None = None)`: Genera un numero telefonico casuale.
+* `genera_comune(seed: int | None = None)`: Restituisce dati relativi a un comune italiano (Comune, CAP, Provincia).
+
+... `molte altre in arrivo.....`
 
 ---
 
 ## Requisiti
-- Python 3.9+ (il codice usa annotazioni di tipo moderne; adattare se usi versioni precedenti)
-- `git` installato per l'installazione dal repository
+- Python 3.9+ (il codice usa annotazioni di tipo moderne)
 
----
 
 ## Installazione
+
+**Nota:** Per installare il pacchetto è necessario che tu abbia `pip` e `git` installati sul tuo sistema.
 
 Installa direttamente da terminale
 ```bash
@@ -41,12 +65,15 @@ Questo progetto è rilasciato sotto la licenza MIT. Vedi il file `LICENSE` per m
 
 ## Fonti e Ringraziamenti
 
-Questo progetto utilizza il database dei comuni italiani (file JSON) creato e gentilmente messo a disposizione da Matteo Contrini.
+Questo progetto si basa su dati e librerie di terze parti per garantire la precisione.
 
+### Database Comuni Italiani (JSON)
 * **Autore:** Matteo Contrini
-* **Fonte Originale:** [github.com/matteocontrini/comuni-italiani](https://github.com/matteocontrini/comuni-italiani)
+* **Fonte Originale:** [github.com/matteocontrini/comuni-italiani](https://github.com/matteocontrini/comuni-json)
 * **Licenza Dati:** [Creative Commons BY 3.0 IT](https://creativecommons.org/licenses/by/3.0/it/)
 
-
-
-
+### Calcolo Codice Fiscale
+* **Libreria:** codicefiscale-ita
+* **Autore:** Filippo Casadei
+* **Licenza:** [MIT License](https://opensource.org/licenses/MIT) 
+* **Requisiti:** Python >=3.7
