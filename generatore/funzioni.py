@@ -42,11 +42,18 @@ def genera_persona(seed: int | None = None):
     comune = genera_comune()
 
     return {
+        # popolamento da genera_anagrafica()
         "nome": anagrafica['nome'],
         "cognome": anagrafica['cognome'],
         "sesso": anagrafica['sesso'],
+
+        # popolamento da genera_telefono()
         "cellulare": cellulare['cellulare'],
+
+        # popolamento da genera_strade()
         "indirizzo": [indirizzo['odonimo'], indirizzo['nome'], str(indirizzo['civico'])],
+
+        # popolamento da genera_comune()
         "comune": [comune["comune"], comune["cap"], comune["provincia"]]
     }
 

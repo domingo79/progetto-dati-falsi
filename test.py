@@ -49,11 +49,14 @@ for p in lista_anagrafica:
     print(f"{p['titolo']} {p['nome']} {p['cognome']}")
 print()
 
-
+################################### genera_persona  #######################################
+# Genera un dizionario di una persona fittizia contenente dati anagrafici, di contatto e residenza.
+# formato → {'nome': 'Tommaso', 'cognome': 'Gallo', 'sesso': 'M', "cellulare": "349 1113597",
+# "indirizzo": [Piazza Mazzini 115], "comune":[Serra d'Aiello 87030 CS]}
 persone = [genera_persona() for _ in range(4)]
 for persona in persone:
     indirizzo_formattato = " ".join((persona["indirizzo"]))
     comune_formattato = " ".join(persona["comune"])
     print(
-        f"{persona["nome"]} {persona["cognome"]} {persona["cellulare"]} "
-        f"indirizzo: {indirizzo_formattato} - {comune_formattato}")
+        f"{persona["nome"]} {persona["cognome"]} {persona["sesso"]} {persona["cellulare"]}"
+        f" indirizzo: {indirizzo_formattato} - {comune_formattato}")
