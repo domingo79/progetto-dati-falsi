@@ -1,4 +1,5 @@
-from generatore import genera_anagrafica, genera_strade, genera_telefono, genera_comune, genera_persona
+from generatore import (genera_anagrafica, genera_strade, genera_telefono,
+                        genera_comune, genera_persona, genera_eta_e_data_nascita)
 
 #################################   genera_strade   #################################
 # genera indirizzo casuale in formato → {'odonimo': 'Via', 'nome': 'Garibaldi', 'civico': 100}
@@ -49,14 +50,31 @@ for p in lista_anagrafica:
     print(f"{p['titolo']} {p['nome']} {p['cognome']}")
 print()
 
+################################# genera_eta_e_data_nascita ###################################
+# Genera una data di nascita casuale e l'età corrispondente, vincolate da un intervallo di
+# età minimo e massimo.
+# formato → {'eta': 50, 'data_nascita': ''}
+data_di_nascita = genera_eta_e_data_nascita(18, 90)
+print(
+    f"età: {data_di_nascita['eta']}, nato il: {data_di_nascita['data_nascita']}")
+print()
 ################################### genera_persona  #######################################
 # Genera un dizionario di una persona fittizia contenente dati anagrafici, di contatto e residenza.
-# formato → {'nome': 'Tommaso', 'cognome': 'Gallo', 'sesso': 'M', "cellulare": "349 1113597",
-# "indirizzo": [Piazza Mazzini 115], "comune":[Serra d'Aiello 87030 CS]}
+# formato → {'nome': 'Gioia', 'cognome': 'Rizzo', 'sesso': 'F', "cellulare": "349 1113597",
+# 'codice_fiscale': 'RZZGIO80R61B590W', 'eta': 45,
+# 'data_nascita': '21/10/1980', "indirizzo": "Piazza Mazzini 115", "comune": "Candida 83040 AV"}
 persone = [genera_persona() for _ in range(4)]
 for persona in persone:
     indirizzo_formattato = " ".join((persona["indirizzo"]))
     comune_formattato = " ".join(persona["comune"])
+    msg = ""
+    if persona["sesso"] == "M":
+        msg = "nato"
+    else:
+        msg = "nata"
     print(
         f"{persona["nome"]} {persona["cognome"]} {persona["sesso"]} {persona["cellulare"]}"
-        f" indirizzo: {indirizzo_formattato} - {comune_formattato}")
+        f" codice fiscale: {persona["codice_fiscale"]}"
+        f" età: {persona["eta"]} {msg} il {persona["data_nascita"]}"
+        f" indirizzo: {indirizzo_formattato} - {comune_formattato}"
+    )

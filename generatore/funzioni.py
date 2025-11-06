@@ -1,4 +1,6 @@
 import random
+import datetime
+from codicefiscale import codice_fiscale as cf
 from . import dati
 
 
@@ -20,6 +22,9 @@ def genera_persona(seed: int | None = None):
             - "cognome" (str): Il cognome.
             - "sesso" (str): Il sesso ('M' o 'F').
             - "cellulare" (str): Un numero di telefono cellulare.
+            - "data_nascita" (str): data_nascita (DD/MM/YYY),
+            - "eta": (int)eta,
+            - "codice_fiscale"(str): codice_fiscale,
             - "indirizzo" (list[str]): Una lista con [Odonomio, Nome strada, Numero civico].
             - "comune" (list[str]): Una lista con [Nome Comune, CAP, Provincia].
 
@@ -36,25 +41,46 @@ def genera_persona(seed: int | None = None):
         >>> persona_A == persona_B
         True
     """
+    # popolamento da genera_anagrafica()
     anagrafica = genera_anagrafica()
+    nome = anagrafica['nome']
+    cognome = anagrafica['cognome']
+    sesso = anagrafica['sesso']
+
+    # popolamento da genera_telefono()
     cellulare = genera_telefono()
+    cellulare = cellulare['cellulare']
+
+    # popolamento da genera_strade()
     indirizzo = genera_strade()
+    indirizzo = [indirizzo['odonimo'], indirizzo['nome'], indirizzo["civico"]]
+
+    # popolamento da genera_comune()
     comune = genera_comune()
+    comune = [comune["comune"], comune["cap"], comune["provincia"]]
 
+    # popolamento da genera_eta_e_data_nascita()
+    data_di_nascita = genera_eta_e_data_nascita()
+    eta = data_di_nascita["eta"]
+    data_nascita = data_di_nascita["data_nascita"]
+
+    codice_fiscale = cf.genera_codice_fiscale(
+        nome=nome,
+        cognome=cognome,
+        sesso=sesso,
+        data_nascita=data_nascita,
+        comune=comune[0]
+    )
     return {
-        # popolamento da genera_anagrafica()
-        "nome": anagrafica['nome'],
-        "cognome": anagrafica['cognome'],
-        "sesso": anagrafica['sesso'],
-
-        # popolamento da genera_telefono()
-        "cellulare": cellulare['cellulare'],
-
-        # popolamento da genera_strade()
-        "indirizzo": [indirizzo['odonimo'], indirizzo['nome'], str(indirizzo['civico'])],
-
-        # popolamento da genera_comune()
-        "comune": [comune["comune"], comune["cap"], comune["provincia"]]
+        "nome": nome,
+        "cognome": cognome,
+        "sesso": sesso,
+        "cellulare": cellulare,
+        "indirizzo": indirizzo,
+        "comune": comune,
+        "data_nascita": data_nascita,
+        "eta": eta,
+        "codice_fiscale": codice_fiscale,
     }
 
 
@@ -137,7 +163,7 @@ def genera_strade(seed: int | None = None):
     return {
         "odonimo": odonimo,
         "nome": nome,
-        "civico": civico
+        "civico": str(civico)
     }
 
 
@@ -214,4 +240,58 @@ def genera_telefono(seed: int | None = None):
         "prefisso": prefisso,
         "numero": numero_cellulare,
         "cellulare": f"{prefisso} {numero_cellulare}"
+    }
+
+
+def genera_eta_e_data_nascita(min_age=18, max_age=90, seed: int | None = None):
+    """
+    Genera una data di nascita casuale e l'età corrispondente, vincolate da un intervallo di età 
+    minimo e massimo.
+
+    La data di nascita viene scelta in modo casuale all'interno del range di anni specificato da 
+    'min_age' e 'max_age'.
+
+    Args:
+        min_age (int, optional): L'età minima (in anni) della persona da generare. 
+                                Il valore predefinito è 18.
+        max_age (int, optional): L'età massima (in anni) della persona da generare. 
+                                Il valore predefinito è 90.
+        seed (int | None, optional): Un valore seed opzionale per l'inizializzazione del generatore 
+                                    di numeri casuali, utile per la riproducibilità. 
+                                Il valore predefinito è None.
+
+    Returns:
+        dict: Un dizionario contenente:
+            - "data_nascita" (str): La data di nascita generata, formattata come "DD/MM/YYYY".
+            - "eta" (int): L'età calcolata con precisione in base alla data odierna.
+
+    Esempi:
+        >>> risultati = genera_eta_e_data_nascita(min_age=20, max_age=30)
+        >>> print(risultati['eta'])
+        25 
+        >>> print(risultati['data_nascita'])
+        '15/07/2000'
+    """
+    data_odierna = datetime.date.today()
+
+    # Calcola l'anno minimo e massimo in base al range di età
+    anno_min = data_odierna.year - max_age  # 1940
+    anno_max = data_odierna.year - min_age  # 2007
+
+    # Sceglie una data casuale nell'intervallo
+    data_inizio = datetime.date(anno_min, 1, 1)  # 1940, gen, 01
+    data_fine = datetime.date(anno_max, 12, 31)  # 2027, dic, 31
+
+    giorni_totali = (data_fine - data_inizio).days  # 24836
+
+    data_nascita = data_inizio + \
+        datetime.timedelta(days=random.randint(0, giorni_totali))
+
+    # Calcola età
+    eta = data_odierna.year - data_nascita.year - ((data_odierna.month,
+                                                    data_odierna.day) < (data_nascita.month, data_nascita.day))
+    return {
+        # Formattato come stringa DD/MM/YYYY
+        "data_nascita": data_nascita.strftime("%d/%m/%Y"),
+        "eta": eta
     }
