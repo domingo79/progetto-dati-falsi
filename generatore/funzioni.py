@@ -69,7 +69,7 @@ def genera_persona(seed: int | None = None):
         cognome=cognome,
         sesso=sesso,
         data_nascita=data_nascita,
-        comune=comune[0].upper()
+        comune=comune[0].strip()
     )
     return {
         "nome": nome,

@@ -11,3 +11,6 @@ dependencies = ["codicefiscale-ita",]
 
 [tool.setuptools]
 packages = ["generatore"]
+
+[tool.setuptools.package-data]
+generatore = ["comuni_italiani.json"]
