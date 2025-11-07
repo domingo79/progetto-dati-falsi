@@ -277,13 +277,23 @@ def genera_persona(seed: int | None = None):
     eta = data_di_nascita["eta"]
     data_nascita = data_di_nascita["data_nascita"]
 
-    codice_fiscale = cf.genera_codice_fiscale(
-        nome=nome,
-        cognome=cognome,
-        sesso=sesso,
-        data_nascita=data_nascita,
-        comune=comune[0].strip().upper()
-    )
+    try:
+        codice_fiscale = cf.genera_codice_fiscale(
+            nome=nome,
+            cognome=cognome,
+            sesso=sesso,
+            data_nascita=data_nascita,
+            comune=comune[0]
+        )
+    except ValueError as e:
+        print(
+            "------------------------- ERRORE DI GENERAZIONE CF -------------------------")
+        print(f"⚠️ ERRORE CATTURATO: {e}")
+        print(
+            f"DATI DI INPUT: Nome={nome}, Cognome={cognome}, Sesso={sesso}, Comune fornito={comune}")
+        print(
+            "----------------------------------------------------------------------------")
+        codice_fiscale = "CF_NON_VALIDO"
     return {
         "nome": nome,
         "cognome": cognome,
