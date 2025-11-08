@@ -70,11 +70,97 @@ NOMI_STRADE = [
     "dei Fiori", "degli Ulivi", "dei Pini", "delle Rose", "dei Mille", "Nuova",
 ]
 
-# Dentro a generatore_dati/dati.py
-
 PREFISSI_TELEFONICI = [
     "333", "347", "338", "335", "366", "339", "348", "349", "340", "334",
     "320", "328", "329", "330", "331", "336", "337", "342", "345", "346",
     "350", "351", "360", "368", "370", "371", "373", "377", "379",
     "380", "388", "389", "390", "391", "392", "393"
 ]
+# **PROFESSIONI** ripetuto "Disoccupato" "Disoccupata" per renderli più probabili
+PROFESSIONI_MASCHILI = [
+    # Tecnologia e IT
+    "Ingegnere del Software",
+    "Sviluppatore Full-Stack",
+    "Analista Dati",
+    "Data Scientist",
+    "Specialista in Cyber Security",
+    "Cloud Architect",
+    "Amministratore di Rete",
+    "Project Manager IT",
+    "UX/UI Designer",
+    "Consulente IT",
+    "Disoccupato",
+
+    # Scienza e Medicina
+    "Ricercatore Scientifico",
+    "Bioinformatico",
+    "Dottore",
+    "Fisioterapista",
+    "Disoccupato",
+
+    # Finanza e Diritto
+    "Avvocato",
+    "Consulente Finanziario",
+    "Commercialista",
+    "Disoccupato",
+
+    # Servizi e Artigianato
+    "Cuoco Esecutivo",
+    "Elettricista",
+    "Idraulico",
+    "Meccanico",
+
+    # Stato di Default
+    "Disoccupato"
+]
+
+PROFESSIONI_FEMMINILI = [
+    # Tecnologia e IT
+    "Ingegnera del Software",
+    "Sviluppatrice Full-Stack",
+    "Analista Dati",
+    "Data Scientist",
+    "Specialista in Cyber Security",
+    "Cloud Architect",
+    "Amministratrice di Rete",
+    "Project Manager IT",
+    "UX/UI Designer",
+    "Consulente IT",
+    "Disoccupata",
+
+    # Scienza e Medicina
+    "Ricercatrice Scientifica",
+    "Bioinformatica",
+    "Dottoressa",
+    "Fisioterapista",
+    "Disoccupata",
+
+    # Finanza e Diritto
+    "Avvocatessa",
+    "Consulente Finanziaria",
+    "Commercialista",
+    "Disoccupata",
+
+    # Servizi e Altro
+    "Infermiera",
+    "Educatrice Sociale",
+    "Estetista",
+    "Parrucchiera",
+    "Chef",
+
+    # Stato di Default
+    "Disoccupata"
+]
+
+DOMINI_EMAIL = [
+    "generatoresanto.it",
+    "dsgenerafalsi.com",
+    "falsitods.net",
+    "gendomiita.it",
+    "dssimulazioni.com",
+    "testmailds.org",
+    "dodogenerator.org"
+]
+
+STATO_CIVILE_M = ['Celibe', 'Sposato', 'Divorziato', 'Vedovo']
+STATO_CIVILE_F = ['Nubile', 'Sposata', 'Divorziata', 'Vedova']
