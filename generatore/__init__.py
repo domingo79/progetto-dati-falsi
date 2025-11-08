@@ -30,6 +30,9 @@ generati.
 
 from .funzioni import (
     genera_anagrafica,
+    genera_lavoro,
+    genera_email,
+    genera_stato_civile,
     genera_strade,
     genera_telefono,
     genera_comune,

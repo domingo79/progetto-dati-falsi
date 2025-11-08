@@ -1,5 +1,5 @@
-from generatore import (genera_anagrafica, genera_strade, genera_telefono,
-                        genera_comune, genera_persona, genera_eta_e_data_nascita)
+from generatore import (genera_anagrafica, genera_lavoro, genera_email, genera_strade, genera_telefono,
+                        genera_comune, genera_stato_civile, genera_persona, genera_eta_e_data_nascita)
 
 #################################   genera_strade   #################################
 # genera indirizzo casuale in formato → {'odonimo': 'Via', 'nome': 'Garibaldi', 'civico': 100}
@@ -45,7 +45,7 @@ print()
 # genera 4 anagrafiche casuali con formato titolo, nome e cognome
 # formato → {'nome': 'Guido', 'cognome': 'Mancini', 'sesso': 'M', 'titolo': 'Sig.'}
 lista_anagrafica = [genera_anagrafica(titoli=True) for _ in range(4)]
-print(" Genera 4 anagrafiche con formato titolo nome cognome".center(70, '#'))
+print(" Genera 4 anagrafiche con formato titolo nome cognome ".center(70, '#'))
 for p in lista_anagrafica:
     print(f"{p['titolo']} {p['nome']} {p['cognome']}")
 print()
@@ -55,15 +55,45 @@ print()
 # età minimo e massimo.
 # formato → {'eta': 50, 'data_nascita': ''}
 data_di_nascita = genera_eta_e_data_nascita(18, 90)
+print(" Genera età e data di nascita formato DD/MM/YYYY ".center(70, '#'))
 print(
     f"età: {data_di_nascita['eta']}, nato il: {data_di_nascita['data_nascita']}")
 print()
+
+
+################################# genera_lavoro ###################################
+# Genera una professione casuale, declinato in base al sesso. Se il sesso non è valido,
+# restituisce 'Non specificato'.
+# formato → {'professione': 'Avvocato'}
+lavoro = genera_lavoro(sesso='M', eta=66)
+print(" Genera professione altrimenti Pensionato/a ".center(70, '#'))
+print("Professione:", lavoro['professione'])
+print()
+
+################################# genera_email ###################################
+# Genera un indirizzo email fittizio (username@dominio) basato su nome e cognome.
+# formato → {'email': 'pallino-pinco@falsitods.net'}
+e_mail = genera_email(nome="pinco", cognome="pallino")
+print(" Genera_email ".center(70, '#'))
+print("e-mail:", e_mail['email'])
+print()
+
+################################# genera_stato_civile ###################################
+# Genera uno stato civile casuale, declinato in base al sesso della persona.
+# formato → {'stato_civile': 'Divorziato'}
+stato_civile = genera_stato_civile()
+print(" Genera uno stato civile ".center(70, '#'))
+print("Stato Civile:", stato_civile['stato_civile'])
+print()
+
 ################################### genera_persona  #######################################
 # Genera un dizionario di una persona fittizia contenente dati anagrafici, di contatto e residenza.
-# formato → {'nome': 'Gioia', 'cognome': 'Rizzo', 'sesso': 'F', "cellulare": "349 1113597",
-# 'codice_fiscale': 'RZZGIO80R61B590W', 'eta': 45,
-# 'data_nascita': '21/10/1980', "indirizzo": "Piazza Mazzini 115", "comune": "Candida 83040 AV"}
-persone = [genera_persona() for _ in range(4)]
+# formato → {'nome': 'Rebecca', 'cognome': 'Giordano', 'sesso': 'F', 'stato_civile': 'Divorziata', 'professione': 'Educatrice Sociale',
+# 'email': 'rebecca.giordano@dssimulazioni.com', 'cellulare': '331 8737666',
+# 'indirizzo': ['Via', 'Firenze', '197'], 'comune': ['Premeno', '28818', 'VB'], 'data_nascita': '05/11/2006',
+# 'eta': 19, 'codice_fiscale': 'GRDRCC06S45H030H'}
+persone = [genera_persona() for _ in range(1)]
+print(" Genera una persona con dati fittizzi ".center(70, '#'))
 for persona in persone:
     indirizzo_formattato = " ".join((persona["indirizzo"]))
     comune_formattato = " ".join(persona["comune"])
@@ -73,8 +103,8 @@ for persona in persone:
     else:
         msg = "nata"
     print(
-        f"{persona["nome"]} {persona["cognome"]} {persona["sesso"]} {persona["cellulare"]}"
-        f" codice fiscale: {persona["codice_fiscale"]}"
-        f" età: {persona["eta"]} {msg} il {persona["data_nascita"]}"
-        f" indirizzo: {indirizzo_formattato} - {comune_formattato}"
+        f"Nome:{persona["nome"]} Cognome:{persona["cognome"]} sesso:{persona["sesso"]} Stato Civile:{persona['stato_civile']} e-mail:{persona['email']} tel.:{persona["cellulare"]}"
+        f" codice fiscale:{persona["codice_fiscale"]} Professione:{persona['professione']}"
+        f" età:{persona["eta"]} {msg} il:{persona["data_nascita"]}"
+        f" indirizzo:{indirizzo_formattato} - {comune_formattato}"
     )
