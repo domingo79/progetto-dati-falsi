@@ -217,6 +217,120 @@ def genera_eta_e_data_nascita(min_age=18, max_age=90, seed: int | None = None):
     }
 
 
+def genera_lavoro(sesso: str = 'M', eta: int = 30, seed: int | None = None) -> dict:
+    """
+    Genera un titolo di lavoro/professione casuale, declinato in base al sesso ed età.
+    Se il sesso non è valido, restituisce 'Non specificato'.
+    Se l'età è superiore a 65 la professione sarà disoccupato/a
+
+    Args:
+        sesso (str): Il sesso della persona ('M' o 'F'). Default a M.
+        eta (int): L'eta della persona. Default a 30
+        seed (int | None, optional): Seed per la riproducibilità. Default a None.
+
+    Returns:
+        dict: Un dizionario contenente la chiave 'professione' (str).
+    """
+
+    if seed is not None:
+        random.seed(seed)
+
+    # Standarizzazione del sesso per evitare ripetizioni
+    sesso_std = sesso.upper()
+
+    if eta > 64:
+        if sesso_std == "M":
+            professione_scelta = "Pensionato"
+        elif sesso_std == "F":
+            professione_scelta = "Pensionata"
+        else:
+            return {"professione": 'Non specificato'}
+    else:
+        lista_professioni = (dati.PROFESSIONI_MASCHILI if sesso_std == 'M'
+                             else dati.PROFESSIONI_FEMMINILI if sesso_std == "F"
+                             else None)
+
+        if lista_professioni is None:
+            return {"professione": "Non specificato"}
+
+        professione_scelta = random.choice(lista_professioni)
+
+    return {
+        "professione": professione_scelta,
+    }
+
+
+def genera_email(nome: str = 'pinco', cognome: str = 'pallino', seed: int | None = None) -> dict:
+    """
+    Genera un indirizzo email fittizio (username@dominio) basato su nome e cognome.
+
+    Args:
+        nome (str): Il nome della persona.
+        cognome (str): Il cognome della persona.
+        seed (int | None, optional): Seed per la riproducibilità.
+
+    Returns:
+        dict: Un dizionario contenente la chiave 'email' (str).
+    """
+    if seed is not None:
+        random.seed(seed)
+
+    # Pulizia e normalizzazione di nome e cognome
+    nome_pulito = nome.lower().strip().replace(' ', '')
+    cognome_pulito = cognome.lower().strip().replace(' ', '')
+
+    formati_username = [
+        f"{nome_pulito}.{cognome_pulito}",
+        f"{cognome_pulito}-{nome_pulito}",
+        f"{nome_pulito}{random.randint(1, 99)}{cognome_pulito}",
+        f"{nome_pulito[0]}.{cognome_pulito}{random.randint(1, 9)}"
+    ]
+    username = random.choice(formati_username)
+    dominio = random.choice(dati.DOMINI_EMAIL)
+    return {"email": f"{username}@{dominio}"}
+
+
+def genera_stato_civile(sesso: str = 'M', seed: int | None = None) -> dict:
+    """
+    Genera uno stato civile casuale, declinato in base al sesso della persona.
+
+    La funzione utilizza liste separate per l'assegnazione al maschile (Celibe/Sposato/Divorziato/Vedovo) 
+    e al femminile (Nubile/Sposata/Divorziata/Vedova).
+
+    Args:
+        sesso (str): Il sesso della persona ('M' o 'F'). Default a M.
+        seed (int | None, optional): Un valore seed opzionale per la riproducibilità. 
+                                    Il valore predefinito è None.
+
+    Returns:
+        dict: Un dizionario contenente la chiave 'stato_civile' (str).
+            Restituisce "Non specificato" se il parametro 'sesso' non è valido.
+
+    Esempi:
+        >>> genera_stato_civile(sesso='M')['stato_civile']
+        'Celibe'
+        >>> genera_stato_civile(sesso='F')['stato_civile']
+        'Nubile'
+    """
+
+    if seed is not None:
+        random.seed(seed)
+
+    # Standarizzazione del sesso per evitare ripetizioni
+    sesso_std = sesso.upper()
+
+    if sesso_std == 'M':
+        stato = dati.STATO_CIVILE_M
+    elif sesso_std == 'F':
+        stato = dati.STATO_CIVILE_F
+    else:
+        return {"stato_civile": "Non specificato"}
+
+    stato_civile = random.choice(stato)
+
+    return {"stato_civile": stato_civile}
+
+
 def genera_persona(seed: int | None = None):
     """
     Genera un dizionario completo contenente dati anagrafici, di contatto e residenza per una 
@@ -254,13 +368,21 @@ def genera_persona(seed: int | None = None):
         >>> persona_A == persona_B
         True
     """
-    # popolamento da genera_anagrafica()
+    # popolamento da anagrafica da genera_anagrafica()
     anagrafica = genera_anagrafica()
     nome = anagrafica['nome']
     cognome = anagrafica['cognome']
     sesso = anagrafica['sesso']
 
-    # popolamento da genera_telefono()
+    # popolamento stato civile da genera_stato_civile()
+    st_civ = genera_stato_civile(sesso=sesso)
+    stato_civile = st_civ['stato_civile']
+
+    # popolamento e-mail da genera_email()
+    mail = genera_email(nome=nome, cognome=cognome)
+    email = mail['email']
+
+    # popolamento cellulare da genera_telefono()
     cellulare = genera_telefono()
     cellulare = cellulare['cellulare']
 
@@ -276,6 +398,10 @@ def genera_persona(seed: int | None = None):
     data_di_nascita = genera_eta_e_data_nascita()
     eta = data_di_nascita["eta"]
     data_nascita = data_di_nascita["data_nascita"]
+
+    # popolamento professione
+    lavoro = genera_lavoro(sesso=sesso, eta=eta)
+    professione = lavoro['professione']
 
     try:
         codice_fiscale = cf.genera_codice_fiscale(
@@ -298,6 +424,9 @@ def genera_persona(seed: int | None = None):
         "nome": nome,
         "cognome": cognome,
         "sesso": sesso,
+        "stato_civile": stato_civile,
+        "professione": professione,
+        "email": email,
         "cellulare": cellulare,
         "indirizzo": indirizzo,
         "comune": comune,
