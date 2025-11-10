@@ -73,7 +73,7 @@ Questo progetto si basa su dati e librerie di terze parti per garantire la preci
 * **Licenza Dati:** [Creative Commons BY 3.0 IT](https://creativecommons.org/licenses/by/3.0/it/)
 
 ### Calcolo Codice Fiscale
-* **Libreria:** codicefiscale-ita
+* **Libreria:** [codicefiscale-ita](https://pypi.org/project/codicefiscale-ita/)
 * **Autore:** Filippo Casadei
 * **Licenza:** [MIT License](https://opensource.org/licenses/MIT) 
 * **Requisiti:** Python >=3.7
