@@ -6,7 +6,7 @@ from generatore import (genera_anagrafica, genera_lavoro, genera_email, genera_s
 indirizzo = genera_strade()
 print(" Genara un indirizzo completo (casuale) ".center(70, '#'))
 print(
-    f"Indirizzo: {indirizzo["odonimo"]} {indirizzo["nome"]}, {indirizzo['civico']}")
+    f"Indirizzo: {indirizzo['odonimo']} {indirizzo['nome']}, {indirizzo['civico']}")
 print()
 
 # genera n indirizzi casuali in formato → {'odonimo': 'Via', 'nome': 'Garibaldi', 'civico': 100}
@@ -14,7 +14,7 @@ print(" Genara 5 indirizzi completi (casuali) ".center(70, '#'))
 indirizzi = [genera_strade() for _ in range(5)]
 for indirizzo in indirizzi:
     print(
-        f"Indirizzo: {indirizzo["odonimo"]} {indirizzo["nome"]}, {indirizzo['civico']}")
+        f"Indirizzo: {indirizzo['odonimo']} {indirizzo['nome']}, {indirizzo['civico']}")
 print()
 
 ################################   genera_telefono     ################################
@@ -103,8 +103,9 @@ for persona in persone:
     else:
         msg = "nata"
     print(
-        f"Nome:{persona["nome"]} Cognome:{persona["cognome"]} sesso:{persona["sesso"]} Stato Civile:{persona['stato_civile']} e-mail:{persona['email']} tel.:{persona["cellulare"]}"
-        f" codice fiscale:{persona["codice_fiscale"]} Professione:{persona['professione']}"
-        f" età:{persona["eta"]} {msg} il:{persona["data_nascita"]}"
+        f"Nome:{persona['nome']} Cognome:{persona['cognome']} sesso:{persona['sesso']} Stato Civile:{persona['stato_civile']} e-mail:{persona['email']} tel.:{persona['cellulare']}"
+        f" codice fiscale:{persona['codice_fiscale']} Professione:{persona['professione']}"
+        f" età:{persona['eta']} {msg} il:{persona['data_nascita']}"
         f" indirizzo:{indirizzo_formattato} - {comune_formattato}"
+        f" patente:{persona['patente']}"
     )

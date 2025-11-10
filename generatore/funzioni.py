@@ -1,6 +1,10 @@
+# Librerie Standard di Python (Built-in)
 import random
-import datetime
+import string
+from datetime import datetime, date, timedelta
+# Librerie di Terze Parti
 from codicefiscale import codice_fiscale as cf
+# Mio Moduli
 from . import dati
 
 
@@ -192,20 +196,20 @@ def genera_eta_e_data_nascita(min_age=18, max_age=90, seed: int | None = None):
         >>> print(risultati['data_nascita'])
         '15/07/2000'
     """
-    data_odierna = datetime.date.today()
+    data_odierna = date.today()
 
     # Calcola l'anno minimo e massimo in base al range di età
     anno_min = data_odierna.year - max_age  # 1940
     anno_max = data_odierna.year - min_age  # 2007
 
     # Sceglie una data casuale nell'intervallo
-    data_inizio = datetime.date(anno_min, 1, 1)  # 1940, gen, 01
-    data_fine = datetime.date(anno_max, 12, 31)  # 2027, dic, 31
+    data_inizio = date(anno_min, 1, 1)  # 1940, gen, 01
+    data_fine = date(anno_max, 12, 31)  # 2027, dic, 31
 
     giorni_totali = (data_fine - data_inizio).days  # 24836
 
     data_nascita = data_inizio + \
-        datetime.timedelta(days=random.randint(0, giorni_totali))
+        timedelta(days=random.randint(0, giorni_totali))
 
     # Calcola età
     eta = data_odierna.year - data_nascita.year - ((data_odierna.month,
@@ -331,6 +335,104 @@ def genera_stato_civile(sesso: str = 'M', seed: int | None = None) -> dict:
     return {"stato_civile": stato_civile}
 
 
+def genera_patente(data_nascita: str = "14/07/1979", eta: int = 40, rilasciato: str = "MIT-UCO", seed: int | None = None) -> dict:
+    """
+    Simula la generazione dei dati di una patente di guida (numero, rilascio, scadenza).
+
+    La funzione applica logiche di rinnovo basate sull'età e calcola date di rilascio/scadenza casuali 
+    ma coerenti, allineando la scadenza al giorno e mese di nascita. Genera un numero di patente 
+    alfanumerico di 10 caratteri (schema: LLNNLNNNNN).
+
+    Args:
+        data_nascita (str): Data di nascita del titolare ('GG/MM/AAAA').
+        eta (int): Età corrente del titolare.
+        rilasciato (str): Ente di rilascio simulato (default 'MIT-UCO').
+        seed (int | None): Seed per il generatore casuale.
+
+    Returns:
+        dict: Dizionario contenente i dettagli della patente simulata.
+              'stato_patente' sarà 'MAI POSSEDUTA' se età < 18 o per probabilità casuale(15%).
+    """
+    FORMATO_DATA = "%d/%m/%Y"
+    CARATTERI = string.ascii_uppercase
+    NUMERI = string.digits
+
+    if seed is not None:
+        random.seed(seed)
+
+    if random.random() < 0.15 or eta < 18:
+        return {
+            "stato_patente": "MAI POSSEDUTA",
+            "numero_patente": '',
+            "categoria": '',
+            "data_rilascio": '',
+            "data_scadenza": '',
+            "rilasciato_da": ''
+        }
+
+    idoneo_guida = 18 <= eta <= 90
+
+    rinnovo = 0
+    if idoneo_guida:
+        if 18 <= eta < 50:
+            rinnovo = 10
+        elif 50 <= eta < 70:
+            rinnovo = 5
+        elif 70 <= eta < 80:
+            rinnovo = 3
+        elif 80 <= eta <= 90:
+            rinnovo = 2
+
+    oggi = datetime.now().date()  # 2025-11-08
+    data_di_nascita = datetime.strptime(
+        data_nascita, FORMATO_DATA).date()  # 1968-09-17
+
+    giorno_nascita = data_di_nascita.day
+    mese_nascita = data_di_nascita.month
+
+    PERIODO = [0.10, 0.25, 0.35, 0.45, 0.65, 0.75, 0.85]
+    scelta = random.choice(PERIODO)
+
+    x_passato = rinnovo * scelta
+    x_futuro = rinnovo - x_passato
+
+    anno_rinnovo = int(oggi.year + x_futuro)
+
+    giorno_rilascio = random.randint(1, 28)
+    mese_rilascio = random.randint(1, 12)
+
+    anno_rilascio = int(oggi.year - x_passato)
+
+    match eta:
+        case _ if 18 <= eta < 25:
+            # casistica di neo patentato
+            data_rilascio = oggi.replace(
+                day=giorno_rilascio, month=(mese_nascita + 2), year=oggi.year)
+            data_scadenza = oggi.replace(
+                day=giorno_nascita, month=mese_nascita, year=anno_rinnovo)
+        case _:
+            data_rilascio = oggi.replace(
+                day=giorno_rilascio, month=mese_rilascio, year=anno_rilascio)
+            data_scadenza = oggi.replace(
+                day=giorno_nascita, month=mese_nascita, year=anno_rinnovo)
+
+    numero_patente = None
+
+    # 2 Lettere + 2 Numeri + 1 Lettera + 5 Numeri = 10 caratteri
+    numero_patente = "".join(random.choices(CARATTERI, k=2)) + \
+        "".join(random.choices(NUMERI, k=2)) + \
+        "".join(random.choices(CARATTERI, k=1)) + \
+        "".join(random.choices(NUMERI, k=5))
+
+    return {"stato_patente": "ATTIVO",
+            "numero_patente": numero_patente,
+            "categoria": 'B',
+            "data_rilascio": data_rilascio.strftime(FORMATO_DATA),
+            "data_scadenza": data_scadenza.strftime(FORMATO_DATA),
+            "rilasciato_da": rilasciato
+            }
+
+
 def genera_persona(seed: int | None = None):
     """
     Genera un dizionario completo contenente dati anagrafici, di contatto e residenza per una 
@@ -368,6 +470,9 @@ def genera_persona(seed: int | None = None):
         >>> persona_A == persona_B
         True
     """
+    if seed is not None:
+        random.seed(seed)
+
     # popolamento da anagrafica da genera_anagrafica()
     anagrafica = genera_anagrafica()
     nome = anagrafica['nome']
@@ -403,6 +508,15 @@ def genera_persona(seed: int | None = None):
     lavoro = genera_lavoro(sesso=sesso, eta=eta)
     professione = lavoro['professione']
 
+    # popolamento patente
+    patente = genera_patente(data_nascita=data_nascita, eta=eta)
+    stato_patente = patente["stato_patente"]
+    numero_patente = patente["numero_patente"]
+    categoria_patente = patente["categoria"]
+    data_rilascio_patente = patente["data_rilascio"]
+    data_scadenza_patente = patente["data_scadenza"]
+    rilasciata = patente["rilasciato_da"]
+
     try:
         codice_fiscale = cf.genera_codice_fiscale(
             nome=nome,
@@ -420,6 +534,7 @@ def genera_persona(seed: int | None = None):
         print(
             "----------------------------------------------------------------------------")
         codice_fiscale = "CF_NON_VALIDO"
+
     return {
         "nome": nome,
         "cognome": cognome,
@@ -433,4 +548,12 @@ def genera_persona(seed: int | None = None):
         "data_nascita": data_nascita,
         "eta": eta,
         "codice_fiscale": codice_fiscale,
+        "patente": {
+            "stato": stato_patente,
+            "numero": numero_patente,
+            "categoria": categoria_patente,
+            "data_rilascio": data_rilascio_patente,
+            "data_scadenza": data_scadenza_patente,
+            "rilasciata": rilasciata
+        }
     }
