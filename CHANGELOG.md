@@ -3,6 +3,11 @@
 Tutti i cambiamenti significativi a questo progetto saranno documentati in questo file.
 Il formato è basato su [Keep a Changelog].
 
+## [0.3.0] - 2025-11-10
+### Aggiunto (Added)
+- Aggiunta la funzione `genera_patente()` Simula la generazione dei dati di una patente di guida.
+- Questa nuova funzionalità è stata aggregate alla funzione principale `genera_persona()` per completare i dati del profilo fittizio.
+
 ## [0.2.0] - 2025-11-08
 ### Aggiunto (Added)
 - Aggiunta la funzione `genera_lavoro()` per generare una professione (declinata per sesso ed età pensionabile).
