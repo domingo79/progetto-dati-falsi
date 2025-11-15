@@ -48,12 +48,30 @@ Genera un dizionario completo contenente tutti i dati aggregati di una persona f
 
 **Nota:** Per installare il pacchetto è necessario che tu abbia `pip` e `git` installati sul tuo sistema.
 
-Installa direttamente da terminale
+**Crea un ambiente virtuale** Un ambiente virtuale eviterà possibili conflitti di installazione con altre versioni e pacchetti Python.  
+È facoltativo, ma fortemente consigliato:
+
+### 1\. Crea l'ambiente virtuale
+
+```bash
+python -m venv venv
+```
+### 2\. 🟢 Attivazione dell'Ambiente
+
+| Sistema Operativo | Comando di **Attivazione** |
+| :--- | :--- |
+| **Linux / macOS** (Shell Bash/Zsh) | `source venv/bin/activate` |
+| **Windows** (Prompt dei comandi / CMD) | `venv\Scripts\activate` |
+| **Windows** (PowerShell) | `venv\Scripts\Activate.ps1` |
+
+### 3\. Installa direttamente da terminale
+
 ```bash
 pip install git+https://github.com/domingo79/progetto-dati-falsi.git
 ```
 
 Per forzare l'aggiornamento all'ultima versione presente nel repository:
+
 ```bash
 pip install --upgrade git+https://github.com/domingo79/progetto-dati-falsi.git
 ```
