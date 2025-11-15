@@ -15,12 +15,16 @@ Genera un dizionario completo contenente tutti i dati aggregati di una persona f
 * `"nome"` (str): Il nome di battesimo.
 * `"cognome"` (str): Il cognome.
 * `"sesso"` (str): Il sesso ('M' o 'F').
+* `"stato_civile"` (str): Uno stato civile in base al sesso ('Celibe', 'Sposato', 'Divorziato', 'Vedovo').
+* `"email"` (str): Una email generate in base ai dati della persona generata.
 * `"cellulare"` (str): Un numero di telefono cellulare.
-* **`"codice_fiscale"` (str): Il Codice Fiscale calcolato sulla base degli altri dati. (NUOVO!)**
-* **`"data_nascita"` (str): Data di nascita, formattata come "DD/MM/YYYY". (NUOVO!)**
-* **`"eta"` (int): Età calcolata in anni. (NUOVO!)**
+* `"codice_fiscale"` (str): Il Codice Fiscale calcolato sulla base degli altri dati. (PENULTIMI INSERITI)
+* `"data_nascita"` (str): Data di nascita, formattata come "DD/MM/YYYY". (PENULTIMI INSERITI)
+* `"eta"` (int): Età calcolata in anni. (PENULTIMI INSERITI)
+* `"professione"` (str): Una professione random.
 * `"indirizzo"` (list[str]): Una lista con [Odonomio, Nome strada, Numero civico].
 * `"comune"` (list[str]): Una lista con [Nome Comune, CAP, Provincia].
+* **`"patente"` (list[str]): Una lista con [stato, num_patente, rilascio, scadenza, categoria]. (NUOVO!)**
 
 ---
 
