@@ -92,7 +92,7 @@ print()
 # 'email': 'rebecca.giordano@dssimulazioni.com', 'cellulare': '331 8737666',
 # 'indirizzo': ['Via', 'Firenze', '197'], 'comune': ['Premeno', '28818', 'VB'], 'data_nascita': '05/11/2006',
 # 'eta': 19, 'codice_fiscale': 'GRDRCC06S45H030H'}
-persone = [genera_persona() for _ in range(1)]
+persone = [genera_persona() for _ in range(5)]
 print(" Genera una persona con dati fittizzi ".center(70, '#'))
 for persona in persone:
     indirizzo_formattato = " ".join((persona["indirizzo"]))
@@ -109,3 +109,4 @@ for persona in persone:
         f" indirizzo:{indirizzo_formattato} - {comune_formattato}"
         f" patente:{persona['patente']}"
     )
+    print()

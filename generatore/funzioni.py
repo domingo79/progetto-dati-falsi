@@ -389,6 +389,7 @@ def genera_patente(data_nascita: str = "14/07/1979", eta: int = 40, rilasciato: 
 
     giorno_nascita = data_di_nascita.day
     mese_nascita = data_di_nascita.month
+    anno_nascita = data_di_nascita.year
 
     PERIODO = [0.10, 0.25, 0.35, 0.45, 0.65, 0.75, 0.85]
     scelta = random.choice(PERIODO)
@@ -404,12 +405,22 @@ def genera_patente(data_nascita: str = "14/07/1979", eta: int = 40, rilasciato: 
     anno_rilascio = int(oggi.year - x_passato)
 
     match eta:
-        case _ if 18 <= eta < 25:
-            # casistica di neo patentato
+        case _ if 18 <= eta < 28:
+            # casistica di neo patentato - rilascio patente dopo 1-12 mesi dal mese di nascita
+            nuovo_giorno = giorno_nascita + giorno_rilascio
+            nuovo_mese = mese_nascita + mese_rilascio
+            nuovo_anno = anno_nascita + eta
+
+            if nuovo_giorno > 28:
+                nuovo_giorno -= 28
+
+            if nuovo_mese > 12:
+                nuovo_mese -= 12
+
             data_rilascio = oggi.replace(
-                day=giorno_rilascio, month=(mese_nascita + 2), year=oggi.year)
+                day=nuovo_giorno, month=nuovo_mese, year=nuovo_anno)
             data_scadenza = oggi.replace(
-                day=giorno_nascita, month=mese_nascita, year=anno_rinnovo)
+                day=giorno_nascita, month=mese_nascita, year=nuovo_anno + rinnovo)
         case _:
             data_rilascio = oggi.replace(
                 day=giorno_rilascio, month=mese_rilascio, year=anno_rilascio)
